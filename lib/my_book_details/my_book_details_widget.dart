@@ -1,3 +1,4 @@
+import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -212,8 +213,8 @@ class _MyBookDetailsWidgetState extends State<MyBookDetailsWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                         child: FFButtonWidget(
-                          onPressed: () {
-                            print('Button pressed ...');
+                          onPressed: () async {
+                            await getBackBookCall();
                           },
                           text: 'Oddaj',
                           options: FFButtonOptions(

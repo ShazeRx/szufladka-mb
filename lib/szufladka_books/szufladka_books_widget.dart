@@ -67,7 +67,7 @@ class _SzufladkaBooksWidgetState extends State<SzufladkaBooksWidget> {
                     width: 50,
                     height: 50,
                     child: CircularProgressIndicator(
-                      color: Color(0xFF262D34),
+                      color: FlutterFlowTheme.secondaryColor,
                     ),
                   ),
                 );

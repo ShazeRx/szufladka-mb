@@ -45,7 +45,7 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
                     width: 50,
                     height: 50,
                     child: CircularProgressIndicator(
-                      color: Color(0xFF262D34),
+                      color: FlutterFlowTheme.secondaryColor,
                     ),
                   ),
                 );

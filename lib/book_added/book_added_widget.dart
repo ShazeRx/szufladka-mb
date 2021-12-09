@@ -2,13 +2,12 @@ import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
-import '../main.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-class BookBorrowedWidget extends StatefulWidget {
-  const BookBorrowedWidget({
+class BookAddedWidget extends StatefulWidget {
+  const BookAddedWidget({
     Key key,
     this.tytul,
     this.autor,
@@ -18,10 +17,10 @@ class BookBorrowedWidget extends StatefulWidget {
   final String autor;
 
   @override
-  _BookBorrowedWidgetState createState() => _BookBorrowedWidgetState();
+  _BookAddedWidgetState createState() => _BookAddedWidgetState();
 }
 
-class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
+class _BookAddedWidgetState extends State<BookAddedWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -39,37 +38,25 @@ class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  InkWell(
-                    onTap: () async {
-                      await Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              NavBarPage(initialPage: 'MyBooks'),
-                        ),
-                        (r) => false,
-                      );
-                    },
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Color(0xFF1E2429),
-                      elevation: 2,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
+                  Card(
+                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                    color: Color(0xFF1E2429),
+                    elevation: 2,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: FlutterFlowIconButton(
+                      borderColor: Colors.transparent,
+                      borderRadius: 30,
+                      buttonSize: 46,
+                      icon: Icon(
+                        Icons.close_rounded,
+                        color: Colors.white,
+                        size: 20,
                       ),
-                      child: FlutterFlowIconButton(
-                        borderColor: Colors.transparent,
-                        borderRadius: 30,
-                        buttonSize: 46,
-                        icon: Icon(
-                          Icons.close_rounded,
-                          color: Colors.white,
-                          size: 20,
-                        ),
-                        onPressed: () async {
-                          Navigator.pop(context);
-                        },
-                      ),
+                      onPressed: () async {
+                        Navigator.pop(context);
+                      },
                     ),
                   )
                 ],
@@ -77,15 +64,15 @@ class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
             ),
             Lottie.asset(
               'assets/lottie_animations/lf20_bbzhskoe.json',
-              width: 200,
-              height: 160,
+              width: 150,
+              height: 130,
               fit: BoxFit.cover,
               animate: true,
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
               child: Text(
-                'Książka wypożyczona!',
+                'Książka dodana!',
                 style: FlutterFlowTheme.title1.override(
                   fontFamily: 'Lexend Deca',
                   color: FlutterFlowTheme.tertiaryColor,
@@ -96,13 +83,13 @@ class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
             ),
             Expanded(
               child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 32),
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 32),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 25, 0, 0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -157,21 +144,14 @@ class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
                       ),
                     ),
                     FFButtonWidget(
-                      onPressed: () async {
-                        await Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>
-                                NavBarPage(initialPage: 'HomeScreen'),
-                          ),
-                          (r) => false,
-                        );
+                      onPressed: () {
+                        print('Button pressed ...');
                       },
-                      text: 'Ekran Główny',
+                      text: 'Go Home',
                       options: FFButtonOptions(
                         width: 230,
                         height: 50,
-                        color: FlutterFlowTheme.secondaryColor,
+                        color: Color(0xFF4B39EF),
                         textStyle: FlutterFlowTheme.subtitle2.override(
                           fontFamily: 'Lexend Deca',
                           color: Colors.white,

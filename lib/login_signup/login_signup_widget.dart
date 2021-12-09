@@ -397,7 +397,7 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Enter the information below to get started.',
+                                        'Wpisz dane aby kontynuować',
                                         textAlign: TextAlign.center,
                                         style:
                                             FlutterFlowTheme.bodyText2.override(

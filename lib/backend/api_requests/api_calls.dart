@@ -2,42 +2,6 @@ import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
-Future<ApiCallResponse> getMyBooksCall({
-  String ktore = '',
-}) {
-  return ApiManager.instance.makeApiCall(
-    callName: 'getMyBooks',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
-    callType: ApiCallType.GET,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
-    },
-    params: {
-      'ktore': ktore,
-    },
-    returnBody: true,
-  );
-}
-
-Future<ApiCallResponse> getBooksFromSzufladkaCall({
-  String ktore = 'szufladka',
-}) {
-  return ApiManager.instance.makeApiCall(
-    callName: 'getBooksFromSzufladka',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
-    callType: ApiCallType.GET,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
-    },
-    params: {
-      'ktore': ktore,
-    },
-    returnBody: true,
-  );
-}
-
 Future<ApiCallResponse> borrowBookCall({
   int id,
 }) {
@@ -101,6 +65,42 @@ Future<ApiCallResponse> createBookCall({
     },
     body: body,
     bodyType: BodyType.JSON,
+    returnBody: true,
+  );
+}
+
+Future<ApiCallResponse> getBooksFromSzufladkaCall({
+  String ktore = 'szufladka',
+}) {
+  return ApiManager.instance.makeApiCall(
+    callName: 'getBooksFromSzufladka',
+    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
+    callType: ApiCallType.GET,
+    headers: {
+      'Authorization':
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
+    },
+    params: {
+      'ktore': ktore,
+    },
+    returnBody: true,
+  );
+}
+
+Future<ApiCallResponse> getMyBooksCall({
+  String ktore = 'moje',
+}) {
+  return ApiManager.instance.makeApiCall(
+    callName: 'getMyBooks',
+    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
+    callType: ApiCallType.GET,
+    headers: {
+      'Authorization':
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
+    },
+    params: {
+      'ktore': ktore,
+    },
     returnBody: true,
   );
 }

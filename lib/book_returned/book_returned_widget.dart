@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
-class BookBorrowedWidget extends StatefulWidget {
-  const BookBorrowedWidget({
+class BookReturnedWidget extends StatefulWidget {
+  const BookReturnedWidget({
     Key key,
     this.tytul,
     this.autor,
@@ -18,10 +18,10 @@ class BookBorrowedWidget extends StatefulWidget {
   final String autor;
 
   @override
-  _BookBorrowedWidgetState createState() => _BookBorrowedWidgetState();
+  _BookReturnedWidgetState createState() => _BookReturnedWidgetState();
 }
 
-class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
+class _BookReturnedWidgetState extends State<BookReturnedWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -85,7 +85,7 @@ class _BookBorrowedWidgetState extends State<BookBorrowedWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0, 24, 0, 0),
               child: Text(
-                'Książka wypożyczona!',
+                'Książka zwrócona!',
                 style: FlutterFlowTheme.title1.override(
                   fontFamily: 'Lexend Deca',
                   color: FlutterFlowTheme.tertiaryColor,
