@@ -5,11 +5,7 @@ import 'dart:core';
 import 'package:http/http.dart' as http;
 import 'package:equatable/equatable.dart';
 
-enum ApiCallType {
-  GET,
-  POST,
-  DELETE,
-}
+enum ApiCallType { GET, POST, DELETE, PATCH }
 
 enum BodyType {
   NONE,
@@ -21,6 +17,7 @@ enum BodyType {
 class ApiCallRecord extends Equatable {
   ApiCallRecord(this.callName, this.apiUrl, this.headers, this.params,
       this.body, this.bodyType);
+
   final String callName;
   final String apiUrl;
   final Map<String, dynamic> headers;
@@ -34,8 +31,10 @@ class ApiCallRecord extends Equatable {
 
 class ApiCallResponse {
   const ApiCallResponse(this.jsonBody, this.statusCode);
+
   final dynamic jsonBody;
   final int statusCode;
+
   // Whether we recieved a 2xx status (which generally marks success).
   bool get succeeded => statusCode >= 200 && statusCode < 300;
 }
@@ -47,13 +46,18 @@ class ApiManager {
   static Map<ApiCallRecord, ApiCallResponse> _apiCache = {};
 
   static ApiManager _instance;
+
   static ApiManager get instance => _instance ??= ApiManager._();
 
   // If your API calls need authentication, populate this field once
   // the user has authenticated. Alter this as needed.
   static String _accessToken;
 
-  // You may want to call this if, for example, you make a change to the
+  static String get accessToken => _accessToken;
+
+  static set accessToken(String value) {
+    _accessToken = value;
+  } // You may want to call this if, for example, you make a change to the
   // database and no longer want the cached result of a call that may
   // have changed.
   static void clearCache(String callName) => _apiCache.keys
@@ -69,9 +73,9 @@ class ApiManager {
   static ApiCallResponse createResponse(
       http.Response response, bool returnBody) {
     var jsonBody;
-    try {
-      jsonBody = returnBody ? json.decode(response.body) : null;
-    } catch (_) {}
+   // try {
+      jsonBody = returnBody ? json.decode(utf8.decode(response.bodyBytes)) : null;
+   // } catch (_) {}
     return ApiCallResponse(jsonBody, response.statusCode);
   }
 
@@ -105,6 +109,17 @@ class ApiManager {
     final postBody = createPostBody(headers, params, body, bodyType);
     final response = await http.post(Uri.parse(apiUrl),
         headers: toStringMap(headers), body: postBody);
+    return createResponse(response, returnBody);
+  }
+
+  static Future<ApiCallResponse> patchRequest(
+    String apiUrl,
+    Map<String, dynamic> headers,
+    Map<String, dynamic> params,
+    bool returnBody,
+  ) async {
+    headers['content-type']='application/json';
+    final response = await http.patch(Uri.parse(apiUrl), headers: toStringMap(headers));
     return createResponse(response, returnBody);
   }
 
@@ -151,7 +166,7 @@ class ApiManager {
         ApiCallRecord(callName, apiUrl, headers, params, body, bodyType);
     // Modify for your specific needs if this differs from your API.
     if (_accessToken != null) {
-      headers[HttpHeaders.authorizationHeader] = 'Token $_accessToken';
+      headers[HttpHeaders.authorizationHeader] = 'Bearer $_accessToken';
     }
     if (!apiUrl.startsWith('http')) {
       apiUrl = 'https://$apiUrl';
@@ -174,13 +189,16 @@ class ApiManager {
         result = await postRequest(
             apiUrl, headers, params, body, bodyType, returnBody);
         break;
+      case ApiCallType.PATCH:
+        result = await patchRequest(apiUrl, headers, params, returnBody);
+        break;
     }
 
     // If caching is on, cache the result (if present).
     if (cache && result != null) {
       _apiCache[callRecord] = result;
     }
-
+    print(result);
     return result;
   }
 }

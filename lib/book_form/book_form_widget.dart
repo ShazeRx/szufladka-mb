@@ -1,3 +1,5 @@
+import 'package:szufladka/book_added/book_added_widget.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_animations.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
@@ -423,13 +425,23 @@ class _BookFormWidgetState extends State<BookFormWidget>
                           if (!formKey.currentState.validate()) {
                             return;
                           }
-                          Navigator.pop(context);
                           await createBookCall(
                             tytul: tytulController.text,
                             autor: autorController.text,
                             rokWydania: int.parse(riokWydaniaController.text),
                             wydawnictwo: wydawnictwoController.text,
                           );
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => BookAddedWidget(
+                                  tytul: tytulController.text,
+                                  autor: autorController.text,
+                                ),
+                              ),
+                            );
+
+
                         },
                         text: 'Dodaj książkę do zbioru',
                         options: FFButtonOptions(

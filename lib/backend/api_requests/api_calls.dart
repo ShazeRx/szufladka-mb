@@ -2,34 +2,27 @@ import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
 
-Future<ApiCallResponse> borrowBookCall({
-  int id,
-}) {
+String url = 'https://szufladka.herokuapp.com';
+
+Future<ApiCallResponse> borrowBookCall(int id,) {
   return ApiManager.instance.makeApiCall(
     callName: 'borrowBook',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki/id/wez',
-    callType: ApiCallType.POST,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk5MzcwLCJpYXQiOjE2Mzg5NzkzNzAsImp0aSI6ImNhNzk4Njk5MDI3NjRjNDhiZTMxYzFlMTRiN2NjMjE0IiwidXNlcl9pZCI6MX0.KLlxdQyiHMNc5l1lsQO45lMbUod94YedePGU0DjL0-U',
-    },
-    params: {
-      'id': id,
-    },
+    apiUrl: url +
+        '/szufladka/ksiazki/:id:/wez'.replaceAll(":id:", id.toString()),
+    callType: ApiCallType.PATCH,
+    headers: {},
     bodyType: BodyType.JSON,
     returnBody: true,
   );
 }
 
-Future<ApiCallResponse> getBackBookCall() {
+Future<ApiCallResponse> getBackBookCall(int id) {
   return ApiManager.instance.makeApiCall(
     callName: 'getBackBook',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki/id/wez',
-    callType: ApiCallType.POST,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk5MzcwLCJpYXQiOjE2Mzg5NzkzNzAsImp0aSI6ImNhNzk4Njk5MDI3NjRjNDhiZTMxYzFlMTRiN2NjMjE0IiwidXNlcl9pZCI6MX0.KLlxdQyiHMNc5l1lsQO45lMbUod94YedePGU0DjL0-U',
-    },
+    apiUrl: url +
+        '/szufladka/ksiazki/:id:/oddaj'.replaceAll(":id:", id.toString()),
+    callType: ApiCallType.PATCH,
+    headers: {},
     params: {},
     bodyType: BodyType.JSON,
     returnBody: true,
@@ -51,12 +44,9 @@ Future<ApiCallResponse> createBookCall({
 }''';
   return ApiManager.instance.makeApiCall(
     callName: 'createBook',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
+    apiUrl: url + '/szufladka/ksiazki',
     callType: ApiCallType.POST,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk5MzcwLCJpYXQiOjE2Mzg5NzkzNzAsImp0aSI6ImNhNzk4Njk5MDI3NjRjNDhiZTMxYzFlMTRiN2NjMjE0IiwidXNlcl9pZCI6MX0.KLlxdQyiHMNc5l1lsQO45lMbUod94YedePGU0DjL0-U',
-    },
+headers: {},
     params: {
       'tytul': tytul,
       'autor': autor,
@@ -74,12 +64,9 @@ Future<ApiCallResponse> getBooksFromSzufladkaCall({
 }) {
   return ApiManager.instance.makeApiCall(
     callName: 'getBooksFromSzufladka',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
+    apiUrl: url + '/szufladka/ksiazki',
     callType: ApiCallType.GET,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
-    },
+headers: {},
     params: {
       'ktore': ktore,
     },
@@ -92,15 +79,39 @@ Future<ApiCallResponse> getMyBooksCall({
 }) {
   return ApiManager.instance.makeApiCall(
     callName: 'getMyBooks',
-    apiUrl: 'https://szufladka.herokuapp.com/szufladka/ksiazki',
+    apiUrl: url + '/szufladka/ksiazki',
     callType: ApiCallType.GET,
-    headers: {
-      'Authorization':
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQzMjk3NjgxLCJpYXQiOjE2Mzg5Nzc2ODEsImp0aSI6IjBiNWIwNDY4YmU3NzQ3ZjI4MTc0YjczOTIxNWQyMDM1IiwidXNlcl9pZCI6MX0.gcd0VQMSjrQYY_5WvujM_9lEdLHlkWppPsffYsnMMP8',
-    },
+headers: {},
     params: {
       'ktore': ktore,
     },
     returnBody: true,
   );
 }
+
+Future<ApiCallResponse> login(String email, String password) {
+  final body = '''{
+    "kryptonim": "${email}",
+    "haslo": "${password}"
+  }''';
+  return ApiManager.instance.makeApiCall(
+    callName: 'login',
+    apiUrl: url + '/autoryzacja/login/',
+    callType: ApiCallType.POST,
+    headers: {},
+    body:body,
+    bodyType: BodyType.JSON,
+    returnBody: true,
+  );
+}
+Future<ApiCallResponse> profil() {
+
+  return ApiManager.instance.makeApiCall(
+    callName: 'profil',
+    apiUrl: url + '/autoryzacja/profil',
+    callType: ApiCallType.GET,
+    headers: {},
+    returnBody: true,
+  );
+}
+

@@ -1,3 +1,5 @@
+import 'package:szufladka/book_borrowed/book_borrowed_widget.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -232,9 +234,23 @@ class _SzufladkaBookDetailsWidgetState
                                     TextButton(
                                       onPressed: () async {
                                         Navigator.pop(alertDialogContext);
-                                        await getBooksFromSzufladkaCall(
-                                          ktore: 'moje',
+                                        await borrowBookCall(
+                                            getJsonField(widget.bookDetails,
+                                                r'''$.indeks''')
                                         );
+                                        await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                BookBorrowedWidget(
+                                                  tytul: getJsonField(widget.bookDetails,
+                                                      r'''$.tytul'''),
+                                                  autor: getJsonField(widget.bookDetails,
+                                                      r'''$.autor'''),
+                                                ),
+                                          ),
+                                        );
+
                                         ;
                                       },
                                       child: Text('Potwierdź'),

@@ -1,3 +1,5 @@
+import 'package:szufladka/book_returned/book_returned_widget.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_icon_button.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
@@ -65,11 +67,12 @@ class _MyBookDetailsWidgetState extends State<MyBookDetailsWidget> {
                           ],
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           mainAxisSize: MainAxisSize.max,
                           children: [
                             Image.asset(
                               'assets/images/lt22301254_quantized.png',
-                              width: MediaQuery.of(context).size.width,
+                              width: 200,
                               height: 350,
                               fit: BoxFit.fitHeight,
                             )
@@ -213,9 +216,45 @@ class _MyBookDetailsWidgetState extends State<MyBookDetailsWidget> {
                       child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 1, 0, 0),
                         child: FFButtonWidget(
-                          onPressed: () async {
-                            await getBackBookCall();
+                          onPressed: ()async {await showDialog(
+                          context: context,
+                          builder: (alertDialogContext) {
+                            return AlertDialog(
+                              title: Text('Oddawanie'),
+                              content:
+                              Text('Potwierdź oddanie pozycji'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () =>
+                                      Navigator.pop(alertDialogContext),
+                                  child: Text('Anuluj'),
+                                ),
+                                TextButton(
+                                  onPressed: () async {
+                                    Navigator.pop(alertDialogContext);
+                                    await getBackBookCall(
+                                        getJsonField(widget.bookDetails,
+                                            r'''$.indeks''')
+                                    );
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            BookReturnedWidget(
+                                              tytul: getJsonField(widget.bookDetails,
+                                                  r'''$.tytul'''),
+                                              autor: getJsonField(widget.bookDetails,
+                                                  r'''$.autor'''),
+                                            ),
+                                      ),
+                                    );
+                                  },
+                                  child: Text('Potwierdź'),
+                                ),
+                              ],
+                            );
                           },
+                        );},
                           text: 'Oddaj',
                           options: FFButtonOptions(
                             color: Color(0xFF4B39EF),

@@ -139,7 +139,7 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Lottie.asset(
-                                      'assets/lottie_animations/86840-learn-online.json',
+                                      'assets/lottie_animations/book_online.json',
                                       width: MediaQuery.of(context).size.width *
                                           0.9,
                                       height: 200,
@@ -210,11 +210,13 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 30, 0, 30),
-                                      child: Image.asset(
-                                        'assets/images/onboarding_3.png',
-                                        width: 300,
-                                        height: 250,
-                                        fit: BoxFit.fitWidth,
+                                      child: Lottie.asset(
+                                        'assets/lottie_animations/return_book.json',
+                                        width: MediaQuery.of(context).size.width *
+                                            0.9,
+                                        height: 200,
+                                        fit: BoxFit.scaleDown,
+                                        animate: true,
                                       ),
                                     )
                                   ],
@@ -227,7 +229,7 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'Review Purchases',
+                                          'Zwracaj książki online',
                                           textAlign: TextAlign.center,
                                           style:
                                               FlutterFlowTheme.title1.override(
@@ -249,7 +251,7 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          'Keep track of all your purchases that you have made, want to trade books in? Go ahead and list them for exchange.',
+                                          'Zwróć książkę online i dostarcz ją do publicznej szufladki',
                                           textAlign: TextAlign.center,
                                           style: FlutterFlowTheme.subtitle2
                                               .override(
@@ -320,7 +322,7 @@ class _WelcomeScreenWidgetState extends State<WelcomeScreenWidget> {
                         ),
                       );
                     },
-                    text: 'Continue',
+                    text: 'Kontynuuj',
                     options: FFButtonOptions(
                       width: 200,
                       height: 50,

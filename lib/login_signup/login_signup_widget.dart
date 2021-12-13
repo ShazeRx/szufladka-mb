@@ -1,3 +1,7 @@
+import 'package:szufladka/backend/api_requests/api_calls.dart';
+import 'package:szufladka/backend/api_requests/api_manager.dart';
+import 'package:szufladka/home_screen/home_screen_widget.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -167,7 +171,7 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                               loginEmailAddressController,
                                           obscureText: false,
                                           decoration: InputDecoration(
-                                            labelText: 'Adres email',
+                                            labelText: 'Kryptonim',
                                             labelStyle: FlutterFlowTheme
                                                 .bodyText1
                                                 .override(
@@ -177,7 +181,7 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                               fontWeight: FontWeight.normal,
                                             ),
                                             hintText:
-                                                'Enter your email here...',
+                                                'Wprowadź swój kryptonim',
                                             hintStyle: FlutterFlowTheme
                                                 .bodyText1
                                                 .override(
@@ -239,7 +243,7 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                               fontWeight: FontWeight.normal,
                                             ),
                                             hintText:
-                                                'Enter your email here...',
+                                                'Wprowadź swoje hasło',
                                             hintStyle: FlutterFlowTheme
                                                 .bodyText1
                                                 .override(
@@ -298,10 +302,10 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                       0, 16, 0, 0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if ((functions.authentiacate(
-                                              loginEmailAddressController.text,
-                                              loginPasswordController.text)) !=
-                                          (true)) {
+                                      var response = await login(
+                                          loginEmailAddressController.text,
+                                          loginPasswordController.text);
+                                      if (!response.succeeded) {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
@@ -320,11 +324,11 @@ class _LoginSignupWidgetState extends State<LoginSignupWidget> {
                                                 FlutterFlowTheme.secondaryColor,
                                           ),
                                         );
-                                      }
-                                      if ((functions.authentiacate(
-                                              loginEmailAddressController.text,
-                                              loginPasswordController.text)) ==
-                                          (true)) {
+                                      } else {
+                                        ApiManager.accessToken=getJsonField(response.jsonBody,
+                                                r'''$.dostepowy''')
+                                            .toString();
+                                        user=getJsonField((await profil()).jsonBody,r'''$.kryptonim''');
                                         await Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(

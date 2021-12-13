@@ -1,3 +1,6 @@
+import 'package:szufladka/backend/api_requests/api_calls.dart';
+import 'package:szufladka/backend/api_requests/api_manager.dart';
+
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
@@ -66,49 +69,77 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 children: [
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                              child: Text(
-                                'Krzysztof Perkowski',
-                                style: FlutterFlowTheme.title3.override(
-                                  fontFamily: 'Lexend Deca',
-                                  color: Colors.white,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                    child: FutureBuilder(
+                        future: profil(),
+                        builder: (context, snapshot) {
+                          if (!snapshot.hasData) {
+                            return Center(
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CircularProgressIndicator(
+                                  color: FlutterFlowTheme.secondaryColor,
                                 ),
                               ),
-                            )
-                          ],
-                        ),
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                              child: Text(
-                                'perkowskikrzysio@gmail.com',
-                                style: FlutterFlowTheme.bodyText1.override(
-                                  fontFamily: 'Lexend Deca',
-                                  color: Color(0xFF95A1AC),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
+                            );
+                          }
+                          final data = snapshot.data;
+                          return Builder(
+                            builder: (context) {
+                              final profil= (getJsonField(
+                                  data
+                                      .jsonBody,
+                                  r'''$.'''));
+                              return Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 8, 0, 0),
+                                        child: Text(
+                                          getJsonField(
+                                              profil, r'''$.kryptonim''').toString(),
+                                          style:
+                                              FlutterFlowTheme.title3.override(
+                                            fontFamily: 'Lexend Deca',
+                                            color: Colors.white,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 4, 0, 0),
+                                        child: Text(
+                                          getJsonField(
+                                              profil, r'''$.email''').toString(),
+                                          style: FlutterFlowTheme.bodyText1
+                                              .override(
+                                            fontFamily: 'Lexend Deca',
+                                            color: Color(0xFF95A1AC),
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              );
+                            },
+                          );
+                        }),
                   )
                 ],
               ),
@@ -128,6 +159,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 children: [
                   FFButtonWidget(
                     onPressed: () async {
+                      ApiManager.accessToken = null;
                       await Navigator.pushAndRemoveUntil(
                         context,
                         MaterialPageRoute(

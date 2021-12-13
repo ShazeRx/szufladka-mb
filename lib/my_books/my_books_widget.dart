@@ -1,3 +1,5 @@
+import 'package:lottie/lottie.dart';
+
 import '../backend/api_requests/api_calls.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -57,6 +59,28 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
                               gridViewGetMyBooksResponse.jsonBody, r'''$.''')
                           ?.toList() ??
                       [];
+                  if (book.isEmpty) {
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Nie masz wypożyczonych żadnych książek",
+                              style: FlutterFlowTheme.bodyText2.override(
+                                fontFamily: 'Poppins',
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500,
+                              )),
+                          Lottie.asset(
+                            'assets/lottie_animations/empty_result.json',
+                            width: 150,
+                            height: 130,
+                            fit: BoxFit.cover,
+                            animate: true,
+                          )
+                        ],
+                      ),
+                    );
+                  }
                   return GridView.builder(
                     padding: EdgeInsets.zero,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -82,55 +106,61 @@ class _MyBooksWidgetState extends State<MyBooksWidget> {
                               ),
                             );
                           },
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Container(
-                                width: 100,
-                                height: 150,
-                                decoration: BoxDecoration(
-                                  color: Color(0x00EEEEEE),
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(20),
-                                  child: Image.asset(
-                                    'assets/images/lt22301254_quantized.png',
-                                    width: 100,
-                                    height: 150,
-                                    fit: BoxFit.cover,
+                          child: Container(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Color(0x00EEEEEE),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(20),
+                                    child: Image.asset(
+                                      'assets/images/lt22301254_quantized.png',
+                                      width: 100,
+                                      height: 150,
+                                      fit: BoxFit.cover,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    getJsonField(bookItem, r'''$.tytul''')
-                                        .toString(),
-                                    style: FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Text(
-                                    getJsonField(bookItem, r'''$.autor''')
-                                        .toString(),
-                                    style: FlutterFlowTheme.bodyText1.override(
-                                      fontFamily: 'Poppins',
-                                      color: Color(0xFFCEC2C2),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      width: 120,
+                                      child: Text(
+                                        getJsonField(bookItem, r'''$.tytul''')
+                                            .toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2,
+                                        style:
+                                            FlutterFlowTheme.bodyText1.override(
+                                          fontFamily: 'Poppins',
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      getJsonField(bookItem, r'''$.autor''')
+                                          .toString(),
+                                      style: FlutterFlowTheme.bodyText1.override(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFFCEC2C2),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       );

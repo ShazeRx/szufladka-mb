@@ -7,7 +7,7 @@ import '../szufladka_book_details/szufladka_book_details_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+String user='';
 class HomeScreenWidget extends StatefulWidget {
   const HomeScreenWidget({Key key}) : super(key: key);
 
@@ -26,7 +26,7 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         backgroundColor: Color(0xFF090F13),
         automaticallyImplyLeading: false,
         title: Text(
-          'Witaj Krzysztof! ',
+          'Witaj ${user}! ',
           style: FlutterFlowTheme.title1.override(
             fontFamily: 'Lexend Deca',
             color: Colors.white,
@@ -104,6 +104,16 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
                                 [])
                             .take(6)
                             .toList();
+                        if (myBook.isEmpty) {
+                          return Center(
+                            child: Text("Nie masz wypożyczonych żadnych książek",style: FlutterFlowTheme.bodyText2
+                                .override(
+                              fontFamily: 'Poppins',
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            )),
+                          );
+                        }
                         return SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Row(

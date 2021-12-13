@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 
+import '../main.dart';
+
 class BookAddedWidget extends StatefulWidget {
   const BookAddedWidget({
     Key key,
@@ -144,10 +146,17 @@ class _BookAddedWidgetState extends State<BookAddedWidget> {
                       ),
                     ),
                     FFButtonWidget(
-                      onPressed: () {
-                        print('Button pressed ...');
+                      onPressed: () async {
+                        await Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                NavBarPage(initialPage: 'HomeScreen'),
+                          ),
+                              (r) => false,
+                        );
                       },
-                      text: 'Go Home',
+                      text: 'Ekran Główny',
                       options: FFButtonOptions(
                         width: 230,
                         height: 50,
